@@ -31,6 +31,7 @@ composer require milkyway/silverstripe-microdata:*
 <% loop $Reviews %>
 <div class="review" $microData.getAttributes('review','Review',1)>
     $Content
+    $microData.metaTag('rating','9.5/10')
 </div>
 <% end_loop %>
 ```

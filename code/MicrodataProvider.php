@@ -87,6 +87,21 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 			return '';
 	}
 
+	public function metaTag($prop = '', $content = '', $type = '', $scope = false, $ref = '') {
+		$tags = $this->getAttributes($prop, $type, $scope, $ref, true);
+
+		if($content)
+			$tags['content'] = $content;
+
+		if($type)
+			$tags['href'] = $this->itemTypeURL($type);
+
+		if(count($tags))
+			return DBField::create_field('HTMLText', '<meta ' . $this->convertArray($tags) . ' />');
+		else
+			return '';
+	}
+
 	public function getAttributes($prop = '', $type = '', $scope = false, $ref = '', $array = false) {
 		$tags = array();
 
