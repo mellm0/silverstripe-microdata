@@ -7,6 +7,8 @@
  * @author Mellisa Hankins <mell@milkywaymultimedia.com.au>
  */
 
+use \Doctrine\Common\Inflector\Inflector;
+
 class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 	private static $schema_url = 'http://schema.org';
 	private static $inst;
@@ -31,20 +33,28 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 		);
 	}
 
-	public function Address($ref = '', $array = false) {
-		return $this->getAttributes('address', 'Address', true, $ref, $array);
+	public function Address($prop = '', $ref = '', $array = false) {
+		return $this->getAttributes($prop, 'Address', true, $ref, $array);
 	}
 
-	public function Offers($ref = '', $array = false) {
-		return $this->getAttributes('offers', 'Offer', true, $ref, $array);
+	public function PostalAddress($prop = '', $ref = '', $array = false) {
+		return $this->getAttributes($prop, 'PostalAddress', true, $ref, $array);
 	}
 
-	public function Person($ref = '', $array = false) {
-		return $this->getAttributes('', 'Person', true, $ref, $array);
+	public function Offers($prop = '', $ref = '', $array = false) {
+		return $this->getAttributes($prop, 'Offer', true, $ref, $array);
 	}
 
-	public function Product($ref = '', $array = false) {
-		return $this->getAttributes('', 'Product', true, $ref, $array);
+	public function Person($prop = '', $ref = '', $array = false) {
+		return $this->getAttributes($prop, 'Person', true, $ref, $array);
+	}
+
+	public function Organization($prop = '', $ref = '', $array = false) {
+		return $this->getAttributes($prop, 'Organization', true, $ref, $array);
+	}
+
+	public function Product($prop = '', $ref = '', $array = false) {
+		return $this->getAttributes($prop, 'Product', true, $ref, $array);
 	}
 
 	public function InStock($ref = '', $array = false) {
@@ -55,8 +65,12 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 		return $this->getAttributes('availability', 'NoStock', false, $ref, $array);
 	}
 
+	public function Website($prop = '', $ref = '', $array = false) {
+		return $this->getAttributes($prop, 'WebSite', true, $ref, $array);
+	}
+
 	public function itemProp($value, $array = false) {
-		return $this->getAttribute(preg_replace('/(?<!^)([A-Z])/', '-\\1', $value), 'itemprop', $array);
+		return $this->getAttribute($this->fixValueForProp(preg_replace('/(?<!^)([A-Z])/', '-\\1', $value)), 'itemprop', $array);
 	}
 
 	public function itemType($value, $array = false) {
@@ -106,7 +120,7 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 		$tags = array();
 
 		if($prop)
-			$tags['itemprop'] = $prop;
+			$tags['itemprop'] = $this->fixValueForProp($prop);
 
 		if($type)
 			$tags['itemtype'] = $this->itemTypeURL($type);
@@ -129,7 +143,11 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 			return "$key=\"$value\"";
 	}
 
-	private function convertArray($tags) {
+	protected function fixValueForProp($value) {
+		return Inflector::camelize($value);
+	}
+
+	protected function convertArray($tags) {
 		$parts = array();
 
 		foreach($tags as $name => $value) {
