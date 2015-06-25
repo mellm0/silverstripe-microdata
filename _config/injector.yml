@@ -1,0 +1,6 @@
+---
+Name: microdata-injector
+---
+Injector:
+  s:
+    class: 'Stringy\Stringy'
