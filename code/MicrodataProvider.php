@@ -7,8 +7,6 @@
  * @author Mellisa Hankins <mell@milkywaymultimedia.com.au>
  */
 
-use \Doctrine\Common\Inflector\Inflector;
-
 class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 	private static $schema_url = 'http://schema.org';
 	private static $inst;
