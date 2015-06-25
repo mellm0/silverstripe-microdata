@@ -68,11 +68,12 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 	}
 
 	public function itemProp($value, $array = false) {
-		return $this->getAttribute($this->fixValueForProp(preg_replace('/(?<!^)([A-Z])/', '-\\1', $value)), 'itemprop', $array);
+		return $this->getAttribute($this->fixValueForProp($value), 'itemprop', $array);
 	}
 
 	public function itemType($value, $array = false) {
-		return $this->getAttribute($this->itemTypeURL(preg_replace('/(?<!^)([A-Z])/', '-\\1', $value)), 'itemtype', $array);
+		$value = strtoupper($value) == $value ? $value : preg_replace('/(?<!^)([A-Z])/', '-\\1', $value);
+		return $this->getAttribute($this->itemTypeURL($value), 'itemtype', $array);
 	}
 
 	public function itemScope($array = false) {
@@ -80,7 +81,8 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 	}
 
 	public function itemRef($value, $array = false) {
-		return $this->getAttribute(preg_replace('/(?<!^)([A-Z])/', '-\\1', $value), 'itemref', $array);
+		$value = strtoupper($value) == $value ? $value : preg_replace('/(?<!^)([A-Z])/', '-\\1', $value);
+		return $this->getAttribute($value, 'itemref', $array);
 	}
 
 	public function itemTypeURL($type) {
