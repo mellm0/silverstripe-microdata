@@ -144,7 +144,7 @@ class MicrodataProvider extends ViewableData implements TemplateGlobalProvider {
 	}
 
 	protected function fixValueForProp($value) {
-		return strtoupper($value) == $value ? $value : singleton('s')->camelize($value);
+		return strtoupper($value) == $value ? $value : singleton('s')->create($value)->camelize($value);
 	}
 
 	protected function convertArray($tags) {

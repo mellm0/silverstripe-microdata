@@ -4,3 +4,5 @@ Name: microdata-injector
 Injector:
   s:
     class: 'Stringy\Stringy'
+    constructor:
+      0: 'placeholder'
