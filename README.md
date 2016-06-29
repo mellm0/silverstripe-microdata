@@ -6,7 +6,7 @@ This module allows you to add Microdata via your templates. This module uses **[
 
 Microdata are additional attributes and tags added to describe and provide additional information about the content of your web page.
 
-Some search engines (in particular Google) ahve adopted this technology and use it to enhance their search engine results (and the
+Some search engines (in particular Google) have adopted this technology and use it to enhance their search engine results (and the
 appearance of your search engine result as well!)
 
 For more information see: [Google Webmaster Tools - About microdata](https://support.google.com/webmasters/answer/176035)
